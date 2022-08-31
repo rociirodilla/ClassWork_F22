@@ -5,14 +5,15 @@ Medical Software Design Repository, Fall 2022
 The code in this repository will run a patient health database.
 The code is written in Python.
 
-##Specifications
+## Specifications
 The database contains:
-*Patient names
-    +First Name
-    +Last Name
-*Age
-*Adress
-*Blood type
-*Test Results
-1.AA
-1.AB
+* Patient names
+    + First Name
+    + Last Name
+* Age
+* Blood type
+* Test Results
+1. AA
+1. AB
+
+### Acknowledgements
