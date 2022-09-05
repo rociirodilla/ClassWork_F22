@@ -47,7 +47,10 @@ def check_LDL(LDL_input):
 def LDL_driver():
     Ldl_value=LDL_value()
     answer=check_LDL(Ldl_value)
-    return answer
+    output_LDL_result(Ldl_value,answer)
+
+def output_LDL_result(ldl_value,answer):
+    print("The results for an LDL value of {} is {}.".format(ldl_value,answer))
     
     
 interface()
