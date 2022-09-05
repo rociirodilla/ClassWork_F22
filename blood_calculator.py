@@ -55,5 +55,8 @@ def LDL_driver():
 def output_LDL_result(ldl_value,answer):
     print("The results for an LDL value of {} is {}.".format(ldl_value,answer))
     
-    
+def cholesterol_value():
+    cholesterol_input=input("Enter total cholesterol value for the patient:")
+    return int(cholesterol_input)
+
 interface()
