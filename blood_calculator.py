@@ -33,7 +33,16 @@ def output_HDL_result(hdl_value,charac):
 def LDL_value():
     LDL_input=input("Enter LDL value for the patient:")
     return int(LDL_input)
-    
+
+def check_LDL(LDL_input):
+    if LDL_input < 130:
+        return "Normal"
+    elif LDL_input < 150:
+        return "Borderline High"
+    elif LDL_input <=189:
+        return "High"
+    else:
+        return "Very High"
     
     
 interface()
