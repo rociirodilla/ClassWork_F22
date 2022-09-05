@@ -19,7 +19,7 @@ def check_HDL(HDL_input):
     else:
         return "Borderline Low"
     
-def HDL_driver:
+def HDL_driver():
     Hdl_value=HDL_value()
     answer= check_HDL(Hdl_value)
     output_HDL_result(Hdl_value,answer)
