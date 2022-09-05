@@ -59,4 +59,12 @@ def cholesterol_value():
     cholesterol_input=input("Enter total cholesterol value for the patient:")
     return int(cholesterol_input)
 
+def check_cholesterol(cholesterol_input):
+    if cholesterol_input >= 240:
+        return "High"
+    elif cholesterol_input >= 200:
+        return "Borderline High"
+    else:
+        return "Normal"
+
 interface()
