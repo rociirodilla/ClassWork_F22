@@ -43,6 +43,11 @@ def check_LDL(LDL_input):
         return "High"
     else:
         return "Very High"
+
+def LDL_driver():
+    Ldl_value=LDL_value()
+    answer=check_LDL(Ldl_value)
+    return answer
     
     
 interface()
