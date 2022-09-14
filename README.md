@@ -11,9 +11,13 @@ The database contains:
     + First Name
     + Last Name
 * Age
-* Blood type
+* Patient ID
 * Test Results
-1. AA
-1. AB
+    * Test Name
+    * Test Result
+1. HDL
+1. LDL
 
+## Future Improvements
+* Add blood type
 ### Acknowledgements
