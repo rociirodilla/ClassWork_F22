@@ -43,9 +43,9 @@ def LDL_value():
 def check_LDL(LDL_input):
     if LDL_input < 130:
         return "Normal"
-    elif LDL_input < 150:
+    elif 130<= LDL_input < 150:
         return "Borderline High"
-    elif LDL_input <=189:
+    elif 150<= LDL_input <190:
         return "High"
     else:
         return "Very High"
@@ -77,5 +77,5 @@ def cholesterol_driver():
 
 def output_cholesterol_result(cholesterol,answer):
     print("The results for a total cholesterol value of {} is {}.".format(cholesterol,answer))
-
-interface()
+if __name__=='__main__':
+    interface()
