@@ -5,7 +5,7 @@
              type of medical treatment or diagnostics.
 """
 
-        
+
 def patient_diagnosis():
     print("Choose diagnosis:")
     print("1 - Acute otitis media")
@@ -15,12 +15,14 @@ def patient_diagnosis():
     diagnosis = int(input("Enter a number: "))
     return diagnosis
 
+
 def weight_input():
     print("PATIENT WEIGHT")
     print("Enter patient weight followed by units of kg or lb.")
     print("Examples:  65.3 lb      21.0 kg")
     weight_input = input("Enter weight: ")
     return weight_input
+
 
 def weight_kg(weight):
     weight_data = weight.split(" ")
@@ -29,14 +31,16 @@ def weight_kg(weight):
     if units == "lb":
         Weight = Weight / 2.205
     return Weight
-    
-def dosage_calc(diagnosis,weight):
+
+
+def dosage_calc(diagnosis, weight):
     dosages_mg_per_kg = [30, 10, 10, 12]
     dosage_mg_per_kg = dosages_mg_per_kg[diagnosis-1]
     dosage_mg_first_day = weight * dosage_mg_per_kg
     return dosage_mg_first_day
-    
-def output_fxn(weight,dosage_mg_first_day):
+
+
+def output_fxn(weight, dosage_mg_first_day):
     print("CORRECT DOSAGE")
     print("For a patient weighing {:.1f} kg,".format(weight))
     print("  the correct dosage is {:.1f} mg the first day"
@@ -44,9 +48,8 @@ def output_fxn(weight,dosage_mg_first_day):
 
 
 if __name__ == '__main__':
-    diagnosis=patient_diagnosis()
-    weight=weight_input()
-    kg_weight=weight_kg(weight)
-    dosage=dosage_calc(diagnosis,kg_weight)
-    output_fxn(kg_weight,dosage)
-    
+    diagnosis = patient_diagnosis()
+    weight = weight_input()
+    kg_weight = weight_kg(weight)
+    dosage = dosage_calc(diagnosis, kg_weight)
+    output_fxn(kg_weight, dosage)
