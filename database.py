@@ -15,18 +15,12 @@ def full_name(patient):
 def printing_params(db):
     for patient in db:
         print(patient)
-        print("Name:{},ID :{},Age{}"
-              .format(full_name(patient), patient["ID"], patient["Age"]))
+        print("Name:{},ID :{},Age{}".format(full_name(db[patient]),db[patient]["ID"], db[patient]["Age"]))
 
 
 def find_patient(db, id_num):
-    for patient in db:
-        if patient["ID"] == id_num:
-            print("The patient with this ID is {}"
-                  .format(full_name(patient)))
-            return patient
-    return False
-
+    patient=db[id_num]
+    return patient
 
 def test_results(db, id, test_name, test_value):
     test = [test_name, test_value]
@@ -42,15 +36,15 @@ def adult_or_minor(patient):
         return "minor"
 
 def main():
-    db = []
-    db.append(create_patient_entry("Ann", "Ables", 1, 30))
-    db.append(create_patient_entry("Bob", "Boyles", 2, 34))
-    db.append(create_patient_entry("Chris", "Chou", 3, 25))
+    db = {}
+    db[11]=create_patient_entry("Ann", "Ables", 11, 30)
+    db[22]=create_patient_entry("Bob", "Boyles", 22, 34)
+    db[3]=create_patient_entry("Chris", "Chou", 3, 25)
     #print(db)
     printing_params(db)
     test_results(db, 3, "HDL", 100)
     printing_params(db)
-    print("Patient {} is a {}".format(full_name(db[2]),adult_or_minor(db[2])))
+    #print("Patient {} is a {}".format(full_name(db[2]),adult_or_minor(db[2])))
    
    
 if __name__ == "__main__":
