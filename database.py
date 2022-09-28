@@ -17,6 +17,7 @@ def create_patient_entry(patient_first, patient_last,
                          patient_id, patient_age):
     new_patient = Patient(patient_first, patient_last,
                           patient_id, patient_age)
+
     return new_patient
 
 
@@ -67,6 +68,7 @@ def main():
     # printing_params(db)
     # test_results(db, 3, "HDL", 100)
     # printing_params(db)
+
     # print("Patient {} is a {}".format(full_name(db[2]),
     # adult_or_minor(db[2])))
 
