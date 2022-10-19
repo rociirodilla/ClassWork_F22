@@ -1,3 +1,4 @@
 jupyter
 pytest
 pytest_pycodestyle
+flask
