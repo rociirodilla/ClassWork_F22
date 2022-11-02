@@ -15,9 +15,14 @@ print(r.text)
 
 out_data = {"a": 50,
             "b": 11}
-r = requests.post("http://127.0.0.1:5000/add_numbers", json=out_data)
+# r = requests.post("http://127.0.0.1:5000/add_numbers", json=out_data)
+# print(r.status_code)
+# print(r.text)
+# answer = r.json()
+# a = answer + 3
+# print(a)
+
+
+r = requests.get("http://127.0.0.1:5000/add/2/3")
 print(r.status_code)
 print(r.text)
-answer = r.json()
-a = answer + 3
-print(a)

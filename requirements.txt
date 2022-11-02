@@ -1,4 +1,6 @@
 jupyter
-pytest
+pytest==7.1.3
 pytest_pycodestyle
 flask
+pymodm
+dnspython
