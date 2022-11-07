@@ -56,13 +56,6 @@ def add_patient(patient_name, patient_id, blood_type):
     new_patient = Patient(name=patient_name,
                           id=patient_id,
                           blood_type=blood_type)
-    '''new_patient = {"name": patient_name,
-                   "id": patient_id,
-                   "blood_type": blood_type,
-                   "test_name": [],
-                   "test_result": []}
-    Previous way of adding data, before ModemDB
-    '''
     added_patient = new_patient.save()
     return added_patient
 
@@ -84,6 +77,8 @@ def init_server():
     logging.basicConfig()
     connect("mongodb+srv://rociirodilla:Barsufuelo1998@bme547.1c0qduf.mongodb.net/"
             "health_db?retryWrites=true&w=majority")
+    # If the repository is public, do not push the link!!
+    # For HW etc, this will be in a private environment
 
 
 @app.route("/new_patient", methods=["POST"])
@@ -114,9 +109,6 @@ def add_new_patient_to_server():
     message, status_code = add_new_patient_worker(in_data)
     # Return information
     return message, status_code
-
-
-
 
 
 def add_new_patient_worker(in_data):
@@ -211,17 +203,24 @@ def add_test_worker(in_data):
 
 
 def find_patient(patient_id):
-    for patient in db:
-        if patient["id"] == patient_id:
-            return patient
+    """Finds a patient in the database from Mongodb"""
+    from pymodm import errors as pymodm_errors
+    try:
+        found_patient = Patient.objects.raw({"_id": patient_id}).first()
+    except pymodm_errors.DoesNotExist:
         return False
+    return found_patient
 
 
 def add_test_to_patient(in_data):
+    """Returns test result to target patient record"""
     patient = find_patient(in_data["id"])
-    patient["test_mame"].append(in_data["test_name"])
-    patient["test_result"].append(in_data["test_name"])
-    print_database()
+    if patient is False:
+        return "Patient ID {} not found in database.".format(in_data["id"]), 400
+    patient.test_name.append(in_data["test_name"])
+    patient.test_result.append(in_data["test_name"])
+    patient.save() # Will overwrite the existing entry and substitutes it with this one
+    return "Successfully added test", 200
 
 
 def add_test_validation(in_data):
@@ -229,11 +228,33 @@ def add_test_validation(in_data):
     expected_types = [int, str, int]
     for ex_key, ex_type in zip(expected_keys, expected_types):
         if ex_key is not in_data:
-            return "Key missing"
+            return "Key missing", 400
         if type(in_data[ex_type]) is not ex_type:
-            return "Bad value"
+            return "Bad value", 400
     return True
-            
+
+
+@app.route("/get_results/<patient_id>", methods=["GET"])
+def get_results_flask_handler(patient_id):
+    result, status_code = get_results_worker(patient_id)
+    return jsonify(result), status_code
+
+
+def get_results_worker(patient_id):
+    msg = validate_patient_id(patient_id)
+    if msg is not True:
+        return mgs, 400
+    patient = find_patient(int(patient_id))
+    patient_output = {"name": patient.name,
+                      "test": patient.test_name}
+    return patient_output, 200
+
+
+def validate_patient_id(patient_id_str):
+    try:
+        patient_id = int(patient_id_str)
+    except ValueError:
+        return "Patient Id not valid", 400
 
 
 if __name__ == '__main__':
