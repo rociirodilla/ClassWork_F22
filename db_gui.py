@@ -1,23 +1,77 @@
 import tkinter as tk
 from tkinter import ttk
+import client
+from PIL import Image, ImageTk
+from tkinter import filedialog
 
 
+# Any code that manipulates data should be out of the main_window
+# All functions need a docstring! Does not matter where they are located
+def create_blood_type(letter, rh):
+    output = "{}{}".format(letter, rh)
+    return output
+
+
+def upload_data_to_server(patient_name, patient_id,
+                          patient_blood_letter, patient_rh_factor):
+    blood_type = create_blood_type(patient_blood_letter, patient_rh_factor)
+    patient_id = int(patient_id)
+    msg, code = client.upload_patient_info(patient_name,
+                                           patient_id,
+                                           blood_type)
+    return msg
+
+
+# GUI-related functions will not be tested!
 def main_window():
+
+    def get_update_info():
+        print("Get data")
+        root.after(2000, get_update_info)
+
     # He will look for usability!
     def ok_cmd():
+        # These function should do 3 things
         if rh_button.get() == "":
             print("Chose Rh factor")
             return
+        # 1. Get data from interface
+        patient_name = patient_name_entry.get()
+        patient_id = patient_id_entry.get()
+        patient_blood_letter = blood_letter_selection.get()
+        patient_rh_factor = rh_button.get()
+
+        # 2. Call other testable functions to do all the work
+        msg = upload_data_to_server(patient_name, patient_id, patient_blood_letter,
+                              patient_rh_factor)
         print("Patient name: {}".format(patient_name_entry.get()))
         print("Patient ID: {}".format(patient_id_entry.get()))
         print(" Patient Blood Type: {}{}".format(blood_letter_selection.get(),
                                                  rh_button.get()))
         print("Closest Donation Center: {}".format(donor_center.get()))
         print("Clicked Ok button")
+        # 3. Update GUI based on results of other functions
+        status_label.configure(text=msg)
 
     def cancel_cmd():
         print("Clicked Cancel Button")
         root.destroy()  # This function will completely close the GUI
+
+    def picture_button_cmd():
+        # new_file = "rat.jpeg"
+        # Code will only be tested with .jpeg images
+        new_image = filedialog.askopenfilename()
+        if new_image == "":
+            return
+        print("Filename: {}".format(new_image))
+        pil_image = Image.open(new_image)
+        x_size, y_size = pil_image.size
+        new_y = 200
+        new_x = new_y * x_size/y_size
+        pil_image = pil_image.resize((round(new_x), new_y))
+        tk_image = ImageTk.PhotoImage(pil_image)
+        image_label.configure(image=tk_image)
+        image_label.image = tk_image
 
     # Will do everything related to main interface
     root = tk.Tk()  # This creates the root/most basic window
@@ -70,6 +124,10 @@ def main_window():
     ttk.Checkbutton(root, text="Rh positive", variable=rh_button,
                     onvalue="+", offvalue="-").grid(column=1, row=4)
 
+    picture_button = ttk.Button(root, text="Load Picture",
+                                command=picture_button_cmd)
+    picture_button.grid(column=2, row=8)
+
     # Drop down box
     # You can both select, and type new
     donor_center = tk.StringVar()
@@ -79,6 +137,20 @@ def main_window():
     # If doing this, you cannot change the values
     donor_center_combo.state(["readonly"])
 
+    status_label = ttk.Label(root, text="Status")
+    status_label.grid(column=0, row=7)
+    # tkinter.messagebox is a good alternative for this status label
+    # It will create a pop-up message for the client
+
+    pil_image = Image.open("stress.jpeg")
+    pil_image = pil_image.resize((200,100))
+    tk_image = ImageTk.PhotoImage(pil_image)
+    # Images are shown in tk bt showing them on Labels (Image Label)
+    image_label = ttk.Label(root, image=tk_image)
+    image_label.grid(column=1, row=8)
+    image_label.image = tk_image
+
+    root.after(2000, get_update_info) # After x ms, run the following function
     root.mainloop()  # Starts the interface, the loop that waits for an event
 
 
