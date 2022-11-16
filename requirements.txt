@@ -6,3 +6,4 @@ pymodm
 dnspython
 requests
 Pillow
+matplotlib
